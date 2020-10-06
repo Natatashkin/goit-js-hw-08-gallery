@@ -36,10 +36,9 @@ console.log(images);
 // Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
 
 const galleryRef = document.querySelector(".js-gallery");
-// galleryRef.classList.add(".gallery");
-console.log(galleryRef);
+const gallery = document.querySelector(".gallery");
 
-galleryRef.addEventListener("click", () => {});
+// galleryRef.addEventListener("click", () => {});
 
 const createListItem = ({ preview, original, description }) => {
   const listItemLink = document.createElement("a");
@@ -62,5 +61,5 @@ const createListItem = ({ preview, original, description }) => {
 };
 
 const galleryItems = images.map(createListItem);
-// console.log(galleryItems);
+
 galleryRef.append(...galleryItems);
