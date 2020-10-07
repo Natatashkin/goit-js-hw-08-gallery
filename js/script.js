@@ -55,9 +55,9 @@ const createListItem = ({ preview, original, description }) => {
   listItemImg.alt = description;
   listItemImg.dataset.sourse = original;
 
-  listItem.appendChild(listItemImg);
-  listItemLink.appendChild(listItem);
-  return listItemLink;
+  listItemLink.appendChild(listItemImg);
+  listItem.appendChild(listItemLink);
+  return listItem;
 };
 
 const galleryItems = images.map(createListItem);
