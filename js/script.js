@@ -80,6 +80,7 @@ function onImageClick(event) {
 }
 
 function onModalOpen(event) {
+  window.addEventListener("keydown", onCloseModalByEsc);
   if (event.target.nodeName !== "IMG") {
     return;
   }
@@ -102,8 +103,15 @@ function onChangeLightboxImageUrl(event) {
 }
 
 function onCloseModal() {
+  window.removeEventListener("keydown", onCloseModalByEsc);
   lightboxRef.classList.remove("is-open");
   onClearlightboxImageRef();
+}
+
+function onCloseModalByEsc(event) {
+  if (event.code === "Escape") {
+    onCloseModal();
+  }
 }
 
 function onLightboxClick(event) {
