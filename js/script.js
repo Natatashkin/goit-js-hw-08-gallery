@@ -36,9 +36,10 @@ console.log(images);
 // Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
 
 const galleryRef = document.querySelector(".js-gallery");
-const gallery = document.querySelector(".gallery");
+const lightboxRef = document.querySelector(".js-lightbox");
 
-// galleryRef.addEventListener("click", () => {});
+galleryRef.addEventListener("click", onListImageClick);
+galleryRef.addEventListener("click", onModalOpen);
 
 const createListItem = ({ preview, original, description }) => {
   const listItemLink = document.createElement("a");
@@ -63,3 +64,22 @@ const createListItem = ({ preview, original, description }) => {
 const galleryItems = images.map(createListItem);
 
 galleryRef.append(...galleryItems);
+
+function onListImageClick(event) {
+  event.preventDefault();
+  return event.target.dataset.sourse;
+}
+
+function onModalOpen(event) {
+  if (event.target.nodeName !== "IMG") {
+    return;
+  }
+
+  const currentActiveImage = document.querySelector(".is-open");
+
+  if (currentActiveImage) {
+    lightboxRef.classList.remove("is-open");
+  }
+
+  lightboxRef.classList.add("is-open");
+}
