@@ -37,9 +37,18 @@ console.log(images);
 
 const galleryRef = document.querySelector(".js-gallery");
 const lightboxRef = document.querySelector(".js-lightbox");
+const lightboxOverlay = document.querySelector(".lightbox__overlay");
 
-galleryRef.addEventListener("click", onListImageClick);
+const lightboxImageRef = document.querySelector(".lightbox__image");
+
+const lightBoxCloseBtn = document.querySelector(
+  '[data-action="close-lightbox"]'
+);
+
+galleryRef.addEventListener("click", onImageClick);
 galleryRef.addEventListener("click", onModalOpen);
+lightboxOverlay.addEventListener("click", onLightboxClick);
+lightBoxCloseBtn.addEventListener("click", onCloseModal);
 
 const createListItem = ({ preview, original, description }) => {
   const listItemLink = document.createElement("a");
@@ -65,7 +74,7 @@ const galleryItems = images.map(createListItem);
 
 galleryRef.append(...galleryItems);
 
-function onListImageClick(event) {
+function onImageClick(event) {
   event.preventDefault();
   return event.target.dataset.sourse;
 }
@@ -82,4 +91,28 @@ function onModalOpen(event) {
   }
 
   lightboxRef.classList.add("is-open");
+  onChangeLightboxImageUrl(event);
+}
+
+function onChangeLightboxImageUrl(event) {
+  if (lightboxRef.classList.contains("is-open")) {
+    lightboxImageRef.src = onImageClick(event);
+    lightboxImageRef.alt = event.target.alt;
+  }
+}
+
+function onCloseModal() {
+  lightboxRef.classList.remove("is-open");
+  onClearlightboxImageRef();
+}
+
+function onLightboxClick(event) {
+  if (event.currentTarget === event.target) {
+    onCloseModal();
+  }
+}
+
+function onClearlightboxImageRef() {
+  lightboxImageRef.removeAttribute("src");
+  lightboxImageRef.removeAttribute("alt");
 }
