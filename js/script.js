@@ -1,5 +1,4 @@
 import images from "./gallery-items.js";
-console.log(images);
 
 // Создай галерею с возможностью клика по ее элементам и просмотра полноразмерного изображения в модальном окне.Превью результата посмотри по ссылке.
 
@@ -38,46 +37,39 @@ console.log(images);
 const galleryRef = document.querySelector(".js-gallery");
 const lightboxRef = document.querySelector(".js-lightbox");
 const lightboxOverlay = document.querySelector(".lightbox__overlay");
-
 const lightboxImageRef = document.querySelector(".lightbox__image");
-
 const lightBoxCloseBtn = document.querySelector(
   '[data-action="close-lightbox"]'
 );
 
-galleryRef.addEventListener("click", onImageClick);
+const galleryLits = createListItem(images);
+galleryRef.insertAdjacentHTML('beforeend', galleryLits);
+
+// galleryRef.addEventListener("click", onImageClick);
 galleryRef.addEventListener("click", onModalOpen);
 lightboxOverlay.addEventListener("click", onLightboxClick);
 lightBoxCloseBtn.addEventListener("click", onCloseModal);
 
-const createListItem = ({ preview, original, description }) => {
-  const listItemLink = document.createElement("a");
-  listItemLink.classList.add("gallery__link");
-  listItemLink.href = original;
-  console.log(listItemLink);
-
-  const listItem = document.createElement("li");
-  listItem.classList.add("gallery__item");
-
-  const listItemImg = document.createElement("img");
-  listItemImg.classList.add("gallery__image");
-  listItemImg.src = preview;
-  listItemImg.alt = description;
-  listItemImg.dataset.sourse = original;
-
-  listItemLink.appendChild(listItemImg);
-  listItem.appendChild(listItemLink);
-  return listItem;
+function createListItem (galleryItems) {
+  return galleryItems.map(({ preview, original, description }) => {
+    return `
+    <li class="gallery__item">
+      <a class="gallery__link" href="${original}">
+        <img class="gallery__image"
+          src="${preview}" 
+          data-source="${original}" 
+          alt="${description}"/>
+      </a>
+    </li >
+    `
+  }).join("");
 };
-
-const galleryItems = images.map(createListItem);
-
-galleryRef.append(...galleryItems);
 
 function onImageClick(event) {
   event.preventDefault();
-  return event.target.dataset.sourse;
+  return event.target.dataset.source;
 }
+
 
 function onModalOpen(event) {
   window.addEventListener("keydown", onCloseModalByEsc);
@@ -86,7 +78,6 @@ function onModalOpen(event) {
   }
 
   const currentActiveImage = document.querySelector(".is-open");
-
   if (currentActiveImage) {
     lightboxRef.classList.remove("is-open");
   }
@@ -94,7 +85,7 @@ function onModalOpen(event) {
   lightboxRef.classList.add("is-open");
   onChangeLightboxImageUrl(event);
 }
-
+ 
 function onChangeLightboxImageUrl(event) {
   if (lightboxRef.classList.contains("is-open")) {
     lightboxImageRef.src = onImageClick(event);
