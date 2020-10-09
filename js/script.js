@@ -47,7 +47,7 @@ galleryRef.insertAdjacentHTML('beforeend', galleryLits);
 
 // galleryRef.addEventListener("click", onImageClick);
 galleryRef.addEventListener("click", onModalOpen);
-lightboxOverlay.addEventListener("click", onLightboxClick);
+lightboxOverlay.addEventListener("click", onCloseLightboxByClick);
 lightBoxCloseBtn.addEventListener("click", onCloseModal);
 
 function createListItem (galleryItems) {
@@ -72,6 +72,7 @@ function onImageClick(event) {
 
 
 function onModalOpen(event) {
+  event.preventDefault();
   window.addEventListener("keydown", onCloseModalByEsc);
   if (event.target.nodeName !== "IMG") {
     return;
@@ -105,7 +106,7 @@ function onCloseModalByEsc(event) {
   }
 }
 
-function onLightboxClick(event) {
+function onCloseLightboxByClick(event) {
   if (event.currentTarget === event.target) {
     onCloseModal();
   }
@@ -115,3 +116,4 @@ function onClearlightboxImageRef() {
   lightboxImageRef.removeAttribute("src");
   lightboxImageRef.removeAttribute("alt");
 }
+
