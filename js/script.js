@@ -45,10 +45,10 @@ const lightBoxCloseBtn = document.querySelector(
 const galleryLits = createListItem(images);
 galleryRef.insertAdjacentHTML('beforeend', galleryLits);
 
-// galleryRef.addEventListener("click", onImageClick);
 galleryRef.addEventListener("click", onModalOpen);
 lightboxOverlay.addEventListener("click", onCloseLightboxByClick);
 lightBoxCloseBtn.addEventListener("click", onCloseModal);
+
 
 function createListItem (galleryItems) {
   return galleryItems.map(({ preview, original, description }) => {
@@ -69,7 +69,6 @@ function onImageClick(event) {
   event.preventDefault();
   return event.target.dataset.source;
 }
-
 
 function onModalOpen(event) {
   event.preventDefault();
@@ -93,6 +92,7 @@ function onChangeLightboxImageUrl(event) {
     lightboxImageRef.alt = event.target.alt;
   }
 }
+
 
 function onCloseModal() {
   window.removeEventListener("keydown", onCloseModalByEsc);
