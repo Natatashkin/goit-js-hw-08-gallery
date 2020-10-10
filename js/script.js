@@ -95,13 +95,20 @@ function onChangeLightboxImageUrl(event) {
   }
 }
 
+ function getIndex() {
+    return images.findIndex(elem => lightboxImageRef.src === elem.original);
+}
+
+function setLightboxImageRefAttribute(index) {
+  const nextImageSrc = images[index].original;
+  const nextImageAlt = images[index].description;
+  lightboxImageRef.setAttribute("src", nextImageSrc);
+  lightboxImageRef.setAttribute("alt", nextImageAlt);
+}
+  
 function onShowNextImage(event) {
   if (!(event.code === "ArrowRight")) {
     return;
-  }
-
-  function getIndex() {
-    return images.findIndex(elem => lightboxImageRef.src === elem.original);
   }
 
   let currentImageIndex = getIndex();
@@ -111,10 +118,7 @@ function onShowNextImage(event) {
      currentImageIndex = 0;
   }
 
-  const nextImageSrc = images[currentImageIndex].original;
-  const nextImageAlt = images[currentImageIndex].description;
-  lightboxImageRef.setAttribute("src", nextImageSrc);
-  lightboxImageRef.setAttribute("alt", nextImageAlt);
+  setLightboxImageRefAttribute(currentImageIndex);
 
 }
 function onShowPreviousImage(event) {
@@ -122,21 +126,14 @@ if (!(event.code === "ArrowLeft")) {
     return;
   }
 
-function getIndex() {
-    return images.findIndex(elem => lightboxImageRef.src === elem.original);
-  }
-
   let currentImageIndex = getIndex();
 
    if (currentImageIndex === 0) {
      currentImageIndex = images.length;
-  }
+  } 
   currentImageIndex -= 1;
 
-  const nextImageSrc = images[currentImageIndex].original;
-  const nextImageAlt = images[currentImageIndex].description;
-  lightboxImageRef.setAttribute("src", nextImageSrc);
-  lightboxImageRef.setAttribute("alt", nextImageAlt);
+   setLightboxImageRefAttribute(currentImageIndex);
 
 }
 
