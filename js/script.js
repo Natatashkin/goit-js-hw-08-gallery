@@ -73,6 +73,8 @@ function onImageClick(event) {
 function onModalOpen(event) {
   event.preventDefault();
   window.addEventListener("keydown", onCloseModalByEsc);
+  window.addEventListener("keydown", onShowNextImage);
+   window.addEventListener("keydown", onShowPreviousImage);
   if (event.target.nodeName !== "IMG") {
     return;
   }
@@ -91,6 +93,51 @@ function onChangeLightboxImageUrl(event) {
     lightboxImageRef.src = onImageClick(event);
     lightboxImageRef.alt = event.target.alt;
   }
+}
+
+function onShowNextImage(event) {
+  if (!(event.code === "ArrowRight")) {
+    return;
+  }
+
+  function getIndex() {
+    return images.findIndex(elem => lightboxImageRef.src === elem.original);
+  }
+
+  let currentImageIndex = getIndex();
+
+  currentImageIndex += 1;
+   if (currentImageIndex >images.length-1) {
+     currentImageIndex = 0;
+  }
+
+  const nextImageSrc = images[currentImageIndex].original;
+  const nextImageAlt = images[currentImageIndex].description;
+  lightboxImageRef.setAttribute("src", nextImageSrc);
+  lightboxImageRef.setAttribute("alt", nextImageAlt);
+
+}
+function onShowPreviousImage(event) {
+if (!(event.code === "ArrowLeft")) {
+    return;
+  }
+
+function getIndex() {
+    return images.findIndex(elem => lightboxImageRef.src === elem.original);
+  }
+
+  let currentImageIndex = getIndex();
+
+   if (currentImageIndex === 0) {
+     currentImageIndex = images.length;
+  }
+  currentImageIndex -= 1;
+
+  const nextImageSrc = images[currentImageIndex].original;
+  const nextImageAlt = images[currentImageIndex].description;
+  lightboxImageRef.setAttribute("src", nextImageSrc);
+  lightboxImageRef.setAttribute("alt", nextImageAlt);
+
 }
 
 
